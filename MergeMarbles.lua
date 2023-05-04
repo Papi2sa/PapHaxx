@@ -35,6 +35,10 @@ local cframe = char.HumanoidRootPart.CFrame
 
  local Section = Tab:CreateSection("Main")
 
+ local Tabgay = Window:CreateTab("Teleports", 4483362458) -- Title, Image
+
+ local Sectiongay = Tabgay:CreateSection("Teleports")
+
  local Tab1 = Window:CreateTab("Player", 4483362458) -- Title, Image
 
  local Section1 = Tab1:CreateSection("Player")
@@ -60,6 +64,8 @@ local cframe = char.HumanoidRootPart.CFrame
  local inf = false
  local Clippon = false
  local antadk = false
+ local usedbefore = false
+ local speedbypass = false
  local gays = game:GetService("Workspace").Tycoons[plr.Name.. "_tycoon"]:FindFirstChild("SellButton")["2"].CFrame
 
 
@@ -101,6 +107,22 @@ local cframe = char.HumanoidRootPart.CFrame
     end,
  })
 
+ local Togglegay = Tab1:CreateToggle({
+    Name = "Bypass Speed",
+    CurrentValue = false,
+    Flag = "acm", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+        speedbypass = Value
+    end,
+ })
+
+ local Button = Tab1:CreateButton({
+    Name = "Reset WS",
+    Callback = function()
+        Togglegay:Set(false)
+        speedbypass = false
+    end,
+ })
 
  local Toggle = Tab:CreateToggle({
     Name = "Auto collect marbles",
@@ -128,6 +150,23 @@ local cframe = char.HumanoidRootPart.CFrame
     Flag = "acm", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
     Callback = function(Value)
         adm = Value
+        if usedbefore == false then
+            Rayfield:Notify({
+                Title = "Auto deposit marbles",
+                Content = "Use noclip.",
+                Duration = 6.5,
+                Image = 4483362458,
+                Actions = { -- Notification Buttons
+                   Ignore = {
+                      Name = "Okay!",
+                      Callback = function()
+                      print("The user tapped Okay!")
+                   end
+                },
+             },
+             })
+        end
+        usedbefore = true
         while wait() do
             if adm and guy then
                 local cframe = char.HumanoidRootPart.CFrame
@@ -158,6 +197,13 @@ local cframe = char.HumanoidRootPart.CFrame
     Flag = "WS", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
     Callback = function(Value)
         char.Humanoid.WalkSpeed = Value
+        while wait() do
+            if speedbypass then
+                char.Humanoid.WalkSpeed = Value
+            else
+                break
+            end
+        end
     end,
  })
 
@@ -209,6 +255,41 @@ local cframe = char.HumanoidRootPart.CFrame
     Flag = "aa", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
     Callback = function(Value)
         antadk = Value
+    end,
+ })
+
+ local Button = Tabgay:CreateButton({
+    Name = "Base",
+    Callback = function()
+        char.HumanoidRootPart.CFrame = game:GetService("Workspace").Tycoons[plr.Name.. "_tycoon"].Main.CFrame
+    end,
+ })
+
+ local Button = Tabgay:CreateButton({
+    Name = "Obbys",
+    Callback = function()
+        char.HumanoidRootPart.CFrame = game:GetService("Workspace").Obby.Obbys.Hard.Portl.CFrame
+    end,
+ })
+
+ local Button = Tabgay:CreateButton({
+    Name = "Easy obby end",
+    Callback = function()
+        char.HumanoidRootPart.CFrame = game:GetService("Workspace").Obby.Obbys.Easy.Collect.Touch.CFrame
+    end,
+ })
+
+ local Button = Tabgay:CreateButton({
+    Name = "Hard obby end",
+    Callback = function()
+        char.HumanoidRootPart.CFrame = game:GetService("Workspace").Obby.Obbys.Hard.Collect.Touch.CFrame
+    end,
+ })
+
+ local Button = Tabgay:CreateButton({
+    Name = "Insane obby end",
+    Callback = function()
+        char.HumanoidRootPart.CFrame = game:GetService("Workspace").Obby.Obbys.Insane.Collect.Touch.CFrame
     end,
  })
 
